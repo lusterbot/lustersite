@@ -1,0 +1,70 @@
+---
+title: "Starboard: Highlight Your Server's Best Messages"
+description: "Automatically repost popular messages to a dedicated channel when they collect enough reactions, shining a spotlight on your server's best content."
+---
+
+The starboard surfaces your community's best messages automatically. You choose a channel, an emoji, and a reaction threshold. When any message in your server receives at least that many reactions using your chosen emoji, Luster reposts it to the starboard channel with the reaction count and a link back to the original. Each message is only reposted once, regardless of how many more reactions it collects afterward.
+
+## Setting up the starboard
+
+Everything is configured with a single command:
+
+```
+,starboard set <#channel> [emoji] [threshold]
+```
+
+- **`#channel`** — the channel where starred messages will be reposted (required)
+- **`emoji`** — the reaction emoji to watch for (default: ⭐)
+- **`threshold`** — how many reactions a message needs before it is posted (default: 3)
+
+<Steps>
+  <Step title="Create a starboard channel">
+    Make a new text channel in your server — something like `#starboard` or `#hall-of-fame`. Consider making it read-only for members so only Luster can post there.
+  </Step>
+  <Step title="Run the setup command">
+    ```
+    ,starboard set #starboard
+    ```
+
+    This uses the default ⭐ emoji and a threshold of 3. To customize both:
+
+    ```
+    ,starboard set #starboard ⭐ 5
+    ```
+  </Step>
+</Steps>
+
+<Note>
+  You need the **Administrator** permission to configure the starboard.
+</Note>
+
+## How it works
+
+1. A member reacts to a message with your configured emoji.
+2. Luster counts all reactions on that message using that emoji.
+3. If the count reaches or exceeds your threshold, Luster reposts the message to the starboard channel.
+4. The repost includes the reaction count, a link to the original, and the message content (up to 1,000 characters). If the original has an attachment, the first attachment URL is appended.
+5. The message ID is recorded so it is never reposted a second time.
+
+<Tip>
+  Set the starboard channel as announcement-only (disable **Send Messages** for `@everyone`) so members can react in the channel but cannot post there directly.
+</Tip>
+
+## Removing the starboard
+
+```
+,starboard reset
+```
+
+This clears your server's starboard configuration, including the record of which messages have already been posted. Luster will stop watching for reactions immediately.
+
+<Warning>
+  After a reset, the history of previously starred messages is cleared. If you run `,starboard set` again, messages that were starred before the reset could be reposted if they receive another reaction.
+</Warning>
+
+## Command reference
+
+| Command | Permission | Description |
+|---|---|---|
+| `,starboard set <#channel> [emoji] [threshold]` | Administrator | Configure the starboard channel, emoji, and reaction threshold. |
+| `,starboard reset` | Administrator | Remove the starboard configuration for this server. |

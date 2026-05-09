@@ -1,0 +1,67 @@
+---
+title: "Automatic Message Moderation with AutoMod"
+description: "Automatically delete messages containing blocked words or Discord invite links, and warn the sender — without needing a moderator present."
+sidebarTitle: "AutoMod"
+---
+
+AutoMod watches every message sent in your server and removes content that breaks your rules the moment it appears. You configure a list of words you never want to see, optionally block Discord invite links, and Luster handles the rest — deleting the message and sending the member a brief warning that disappears after a few seconds. No manual intervention required.
+
+<Tip>
+Members with the **Administrator** permission are exempt from AutoMod checks. Their messages will never be deleted by these rules.
+</Tip>
+
+## Blocked words
+
+You can build a list of words that Luster will watch for in every message. Matching is **case-insensitive** and looks for whole-word matches, so adding `spam` won't block `spammer` — but it will catch `spam` on its own.
+
+**Add a word to the blocklist:**
+
+```
+,automod addword <word>
+```
+
+**Remove a word from the blocklist:**
+
+```
+,automod removeword <word>
+```
+
+**View all currently blocked words:**
+
+```
+,automod listwords
+```
+
+<Note>
+Words are stored in lowercase. You don't need to worry about capitalisation when adding them — `Spam`, `SPAM`, and `spam` are all treated identically.
+</Note>
+
+## Invite link blocking
+
+You can prevent members from posting Discord invite links anywhere in your server. When invite blocking is on, Luster deletes any message containing a `discord.gg`, `discord.com/invite`, or `discordapp.com/invite` link and warns the sender.
+
+**Enable invite blocking:**
+
+```
+,automod invites on
+```
+
+**Disable invite blocking:**
+
+```
+,automod invites off
+```
+
+<Info>
+Invite blocking applies server-wide to all text channels. If you want to allow invites in a specific channel, you will need to turn off invite blocking globally and rely on other moderation methods for that channel.
+</Info>
+
+## How AutoMod responds
+
+When a message matches a blocked word or invite link rule:
+
+1. Luster immediately **deletes** the message.
+2. Luster posts a **temporary warning** in the same channel, mentioning the member who sent it. This warning disappears automatically after 5 seconds.
+3. No further action is taken — AutoMod does not mute, kick, or ban members on its own.
+
+If you want repeated violations to result in harsher consequences, pair AutoMod with Luster's muting tools to handle those cases manually.

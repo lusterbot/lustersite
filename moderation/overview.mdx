@@ -1,0 +1,313 @@
+---
+title: "Moderation: Bans, Kicks, Roles & Channel Control"
+description: "A full reference for Luster's moderation commands — banning, kicking, timeouts, channel control, roles, nicknames, jailing, and more."
+sidebarTitle: "Overview"
+---
+
+Luster gives you a complete moderation toolkit that covers everything from standard bans and kicks to persistent hardbans, channel nuking, forced nicknames, and fake permissions. All commands use the default prefix `,` — and every response message can be customized with the invoke system so Luster speaks in your server's voice.
+
+## Bans and kicks
+
+<AccordionGroup>
+  <Accordion title="Ban a member">
+    Remove a member from your server and prevent them from rejoining until manually unbanned.
+
+    ```
+    ,ban <member> [reason]
+    ```
+
+    **Example:** `,ban @User spamming in #general`
+
+    The banned user receives a DM with the reason before they are removed.
+  </Accordion>
+
+  <Accordion title="Hardban a member">
+    A hardban works like a regular ban but registers the user in Luster's persistent list. If someone manually unbans them through Discord's UI or the API, Luster automatically re-bans them.
+
+    ```
+    ,hardban <member> [reason]
+    ,hb <member> [reason]
+    ```
+
+    **Example:** `,hb @User evading previous ban`
+
+    <Warning>
+      Hardban is permanent in a meaningful way — even if another moderator removes the ban via Discord's server settings, Luster will immediately re-apply it. Use `,unhardban` to fully lift a hardban.
+    </Warning>
+  </Accordion>
+
+  <Accordion title="Unban a user">
+    Lift a regular ban. You must supply the user's ID or tag, since they are no longer in the server.
+
+    ```
+    ,unban <user> [reason]
+    ```
+
+    **Example:** `,unban 123456789012345678 appeal accepted`
+
+    If the user is hardbanned, Luster will refuse the unban and instruct you to run `,unhardban` first.
+  </Accordion>
+
+  <Accordion title="Unhardban a user">
+    Remove a user from the hardban list and unban them in a single step.
+
+    ```
+    ,unhardban <user> [reason]
+    ```
+
+    **Example:** `,unhardban 123456789012345678 ban expired`
+  </Accordion>
+
+  <Accordion title="Kick a member">
+    Remove a member from the server without banning them. They can rejoin with a valid invite.
+
+    ```
+    ,kick <member> [reason]
+    ```
+
+    **Example:** `,kick @User breaking server rules`
+  </Accordion>
+
+  <Accordion title="View the ban list">
+    Display up to 50 of the most recent bans in your server.
+
+    ```
+    ,bans
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Timeouts
+
+Discord's native timeout prevents a member from sending messages, adding reactions, or joining voice channels for a set period. Luster makes it easy to apply and remove timeouts with flexible duration syntax.
+
+**Duration format:** combine a number with a unit — `s` (seconds), `m` (minutes), `h` (hours), `d` (days). Examples: `30s`, `10m`, `2h`, `7d`.
+
+<AccordionGroup>
+  <Accordion title="Time out a member">
+    ```
+    ,timeout <member> <duration> [reason]
+    ```
+
+    **Example:** `,timeout @User 1h arguing in #general`
+  </Accordion>
+
+  <Accordion title="Remove a timeout">
+    ```
+    ,untimeout <member> [reason]
+    ```
+
+    **Example:** `,untimeout @User served their time`
+  </Accordion>
+
+  <Accordion title="View active timeouts">
+    List all members currently under a Discord timeout.
+
+    ```
+    ,timeouts
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Channel controls
+
+<AccordionGroup>
+  <Accordion title="Lock and unlock a channel">
+    Locking a channel removes the ability for `@everyone` (and any configured lock roles) to send messages. Unlocking restores the default permissions.
+
+    ```
+    ,lock [#channel] [reason]
+    ,unlock [#channel] [reason]
+    ```
+
+    Omit the channel argument to act on the current channel. You can also lock or unlock every text channel at once:
+
+    ```
+    ,lock all [reason]
+    ,unlock all [reason]
+    ```
+  </Accordion>
+
+  <Accordion title="Hide and unhide a channel">
+    Hiding a channel removes `view_channel` permission for `@everyone`, making it invisible to regular members.
+
+    ```
+    ,hide [#channel]
+    ,unhide [#channel]
+    ```
+
+    To act on all channels at once:
+
+    ```
+    ,hide all
+    ,unhide all
+    ```
+  </Accordion>
+
+  <Accordion title="Nuke a channel">
+    Nuking deletes the channel and immediately recreates an identical copy in the same position, wiping all message history. Luster will ask you to confirm before proceeding.
+
+    ```
+    ,nuke
+    ```
+
+    <Warning>
+      Nuking is irreversible. All messages in the channel are permanently deleted.
+    </Warning>
+
+    You can also schedule a nuke to run after a delay, or manage scheduled nukes:
+
+    ```
+    ,nuke time <#channel> <duration>
+    ,nuke timelist
+    ,nuke remove <#channel>
+    ,nuke clear
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Role management
+
+<AccordionGroup>
+  <Accordion title="Toggle a role on a member">
+    The `,role` command toggles — if the member already has the role it is removed; if they do not, it is added.
+
+    ```
+    ,role <member> [role_name]
+    ```
+
+    **Example:** `,role @User Verified`
+
+    Run `,role <member>` with no role name to list the member's current roles.
+  </Accordion>
+
+  <Accordion title="Strip and restore roles">
+    Strip removes every role below Luster's top role from a member and saves the list so you can restore them later.
+
+    ```
+    ,role strip <member>
+    ,role restore <member>
+    ```
+  </Accordion>
+
+  <Accordion title="Bulk-assign roles">
+    Give a role to every human or every bot in your server:
+
+    ```
+    ,role humans <role_name>
+    ,role bots <role_name>
+    ```
+
+    <Note>
+      Bulk assignments apply to every qualifying member and may take some time on large servers due to rate limiting.
+    </Note>
+  </Accordion>
+
+  <Accordion title="Create, delete, and color roles">
+    ```
+    ,role create <name> [#hex_color]
+    ,role delete <role_name>
+    ,role color <role_name> <#hex_color>
+    ```
+
+    **Example:** `,role create Regulars #7c5cbf`
+  </Accordion>
+</AccordionGroup>
+
+## Nicknames
+
+<AccordionGroup>
+  <Accordion title="Force a nickname on a member">
+    Apply a nickname that Luster will maintain. Leave the nickname blank to remove a previously forced nickname.
+
+    ```
+    ,forcenick <member> [nickname]
+    ```
+
+    **Examples:**
+    - `,forcenick @User Nickname Here` — apply a forced nickname
+    - `,forcenick @User` — remove the forced nickname
+  </Accordion>
+
+  <Accordion title="List forced nicknames">
+    View all members with an active forced nickname.
+
+    ```
+    ,forcenicklist
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Jail
+
+The jail system isolates a member by stripping all their roles and moving them into a dedicated `#jail` channel where they can only communicate with staff. Run `,jail setup` once to create the role and channel before jailing anyone.
+
+<AccordionGroup>
+  <Accordion title="Set up the jail system">
+    ```
+    ,jail setup
+    ```
+
+    This creates a `Jailed` role and a `#jail` channel with restricted permissions. Run this only once. Use `,jail reset` if you need to start over.
+  </Accordion>
+
+  <Accordion title="Jail and unjail a member">
+    ```
+    ,jail member <member> [reason]
+    ,unjail <member> [reason]
+    ```
+
+    When a member is jailed, all their roles are saved. When you unjail them, those roles are restored.
+  </Accordion>
+
+  <Accordion title="List jailed members">
+    ```
+    ,jail list
+    ```
+  </Accordion>
+
+  <Accordion title="Reset the jail system">
+    Removes the `#jail` channel, the `Jailed` role, and releases all currently jailed members.
+
+    ```
+    ,jail reset
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Fake permissions
+
+Fake permissions let you grant non-administrator roles the ability to use specific moderation commands without giving them real Discord permissions. This is useful for trusted community roles that should be able to mute or kick but not have full mod access.
+
+```
+,fakepermissions add <role> <permissions>
+,fakepermissions remove <role> <permissions>
+,fakepermissions view <role>
+,fakepermissions reset <role>
+,fakepermissions list
+```
+
+Separate multiple permissions with commas. Supported permissions: `ban_members`, `kick_members`, `manage_roles`, `manage_channels`, `moderate_members`, `manage_messages`, `administrator`, `manage_nicknames`.
+
+**Example:** `,fakepermissions add Moderator kick_members, manage_messages`
+
+<Note>
+  Only users with the real `Administrator` permission can manage fake permissions.
+</Note>
+
+## Invoke messages
+
+Every moderation command has a default response, but you can replace it with any text you like using the invoke system. Your custom messages are saved per-command and used automatically every time you run that command.
+
+```
+,invoke set <command> <message>
+,invoke view <command>
+,invoke clear <command>
+,invoke list
+```
+
+**Example:** `,invoke set ban User has been removed from the server.`
+
+<Tip>
+  Invoke messages are tied to your account, not the server. Each moderator can have their own custom responses.
+</Tip>

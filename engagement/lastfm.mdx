@@ -1,0 +1,226 @@
+---
+title: "Last.fm Integration: Share Music in Discord"
+description: "Connect your Last.fm account to share what you're listening to, compare music taste with others, claim artist crowns, and explore your listening history."
+sidebarTitle: "Last.fm"
+---
+
+Luster connects to Last.fm to bring your scrobbling history into Discord. Once you link your account, you can show off what you're currently playing, browse your top artists and tracks, fetch lyrics, generate album art grids, and compete with other server members for artist crowns. All Last.fm features live under the `,fm` command group.
+
+## Linking your account
+
+Before you can use any music features, you need to connect your Last.fm username to your Discord account. This only needs to be done once — Luster stores it per user across servers.
+
+```
+,fm set <your Last.fm username>
+```
+
+Luster verifies the username exists on Last.fm and confirms how many scrobbles it found. If you ever want to switch accounts, just run `,fm set` again with your new username.
+
+---
+
+## Now playing
+
+Show what you're currently listening to (or the last track you scrobbled):
+
+```
+,fm
+,fm np
+```
+
+You can also check what another server member is playing by mentioning them:
+
+```
+,fm @username
+```
+
+The response shows the track name, artist, album, your total scrobble count, and links to both your Last.fm profile and the track page.
+
+---
+
+## Your profile and stats
+
+<AccordionGroup>
+  <Accordion title=",fm profile — Overview of your stats">
+    Shows your total scrobble count, average scrobbles per day, and the month you registered on Last.fm.
+
+    ```
+    ,fm profile
+    ,fm profile @user
+    ```
+  </Accordion>
+
+  <Accordion title=",fm topartists — Your most-played artists">
+    Lists your top 20 artists for a given time period. Defaults to all time if you don't specify a period.
+
+    ```
+    ,fm topartists
+    ,fm topartists 7day
+    ,fm topartists 1month
+    ,fm topartists 3month
+    ,fm topartists 6month
+    ,fm topartists 12month
+    ,fm topartists overall
+    ```
+  </Accordion>
+
+  <Accordion title=",fm topalbums — Your most-played albums">
+    Lists your top 20 albums. Accepts the same period options as `,fm topartists`.
+
+    ```
+    ,fm topalbums
+    ,fm topalbums 1month
+    ```
+  </Accordion>
+
+  <Accordion title=",fm toptracks — Your most-played tracks">
+    Lists your top 20 tracks. Accepts the same period options.
+
+    ```
+    ,fm toptracks
+    ,fm toptracks 7day
+    ```
+  </Accordion>
+
+  <Accordion title=",fm weekly — This week in music">
+    Shows a summary of your top artists from the current weekly chart period, with play counts.
+
+    ```
+    ,fm weekly
+    ```
+  </Accordion>
+
+  <Accordion title=",fm playcount — Plays for a specific artist">
+    See exactly how many times you've scrobbled a particular artist.
+
+    ```
+    ,fm playcount <artist name>
+    ```
+
+    Example: `,fm playcount Radiohead`
+  </Accordion>
+
+  <Accordion title=",fm milestones — Scrobble milestones">
+    See which play-count milestones you've reached (1, 10, 50, 100, 500, 1,000, 5,000 … 1,000,000) and what your next milestone is.
+
+    ```
+    ,fm milestones
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Artist and track info
+
+Look up information about an artist or a specific track directly from Last.fm's database, without needing to have it in your own listening history.
+
+```
+,fm artistinfo <artist name>
+```
+
+Displays global play counts, listener count, genre tags, and a short biography.
+
+```
+,fm trackinfo <artist name> <track name>
+```
+
+Displays global play count, listener count, and a link to the track's Last.fm page.
+
+---
+
+## Lyrics
+
+Fetch the lyrics for the track you're currently scrobbling. Luster searches the LRCLib database first and paginates the results if the lyrics are long. If lyrics aren't found, you'll get a direct Genius search link instead.
+
+```
+,fm lyric
+```
+
+---
+
+## Album art
+
+Pull the high-resolution cover art for your currently scrobbling track:
+
+```
+,fm cover
+```
+
+Generate a collage grid of your most-played albums:
+
+```
+,fm grid
+,fm grid 3x3
+,fm grid 5x5
+```
+
+---
+
+## Social features
+
+<Tabs>
+  <Tab title="Who Knows">
+    See which members of your server also listen to a given artist, ranked by their play count.
+
+    ```
+    ,fm whoknows <artist name>
+    ```
+
+    Example: `,fm whoknows Radiohead`
+
+    <Note>
+    Only members who have linked a Last.fm account appear in Who Knows results.
+    </Note>
+  </Tab>
+  <Tab title="Taste comparison">
+    Compare your music taste with another member. Luster looks at your top 100 artists each and calculates a compatibility percentage based on how many you have in common.
+
+    ```
+    ,fm taste @user
+    ```
+  </Tab>
+  <Tab title="Global charts">
+    See what's trending across all of Last.fm right now — not just in your server.
+
+    ```
+    ,fm global
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Crowns
+
+Crowns let you claim ownership of an artist if you have the most plays in your server. The member with the highest play count for that artist holds the crown until someone surpasses them.
+
+<Steps>
+  <Step title="Claim a crown">
+    Run `,fm crown` for an artist. If your play count is higher than anyone else's in the server, you claim the crown. If someone else already holds it with more plays, Luster tells you how many more you need.
+
+    ```
+    ,fm crown <artist name>
+    ```
+  </Step>
+  <Step title="View crowns you hold">
+    See all the artists you currently own a crown for, sorted by play count.
+
+    ```
+    ,fm crowns
+    ,fm crowns @user
+    ```
+  </Step>
+</Steps>
+
+---
+
+## Quick links for the current track
+
+Open your currently playing song on YouTube or Spotify in one command:
+
+```
+,fm youtube
+,fm spotify
+```
+
+Luster generates a search URL based on your current track and artist — just click the link to open it.

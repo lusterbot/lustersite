@@ -1,0 +1,398 @@
+---
+title: "Economy — Currency, Jobs, Shop & Gambling"
+description: "Earn coins through daily rewards, resource gathering, jobs, and quests. Bank your money safely, trade with others, and try your luck in the casino."
+sidebarTitle: "Economy"
+---
+
+Luster's economy system gives every member a wallet and a bank account to manage. You start with 5,000 coins in your wallet and 10,000 in your bank (with a 25,000 capacity). From there, you can earn more by claiming daily rewards, working jobs, gathering resources, completing quests, or taking risks through crime and gambling. Coins can be spent in the shop, transferred to other members, or deposited into your bank for safekeeping.
+
+<Tabs>
+  <Tab title="Earning">
+
+## Claiming rewards
+
+These commands give you free coins on a fixed cooldown. They're the safest and most consistent way to build up your balance.
+
+| Command | Cooldown | Amount |
+|---|---|---|
+| `,daily` | 24 hours | 1,000 – 1,500 |
+| `,weekly` | 7 days | 10,000 – 15,000 |
+| `,monthly` | 30 days | 50,000 – 75,000 |
+
+---
+
+## Working for coins
+
+These commands simulate doing work or finding money around the world. Each has its own cooldown and payout range.
+
+<AccordionGroup>
+  <Accordion title=",work — Random job (1h cooldown, 200–800)">
+    Pick up a random shift as a cashier, delivery driver, cleaner, warehouse worker, or assistant. Earns between 200 and 800 coins.
+
+    ```
+    ,work
+    ```
+  </Accordion>
+
+  <Accordion title=",beg — Beg from strangers (45s cooldown, 10–150)">
+    Ask random NPCs for spare change. There's a 70% chance someone helps you out; the other 30% of the time you're ignored.
+
+    ```
+    ,beg
+    ```
+  </Accordion>
+
+  <Accordion title=",search — Search nearby areas (30s cooldown, 5–200)">
+    Check couch cushions, park benches, trash cans, and fountains for stray coins.
+
+    ```
+    ,search
+    ```
+  </Accordion>
+
+  <Accordion title=",overtime — Work overtime (30m cooldown, 500–1,500)">
+    Put in extra hours for a bonus payout above your regular work wage.
+
+    ```
+    ,overtime
+    ```
+  </Accordion>
+
+  <Accordion title=",freelance — Take a gig (15m cooldown, 300–1,200)">
+    Complete a one-off freelance job in writing, coding, design, consulting, or delivery.
+
+    ```
+    ,freelance
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Gathering resources
+
+These commands send you out into the world to collect things and sell them. Payouts are random within the ranges shown.
+
+| Command | Cooldown | Outcome |
+|---|---|---|
+| `,fish` | 2 minutes | Catch trout, salmon, tuna, or a boot |
+| `,chop` | 2 minutes | Chop wood for 50–400 |
+| `,mine` | 3 minutes | Mine coal, iron, gold, or diamond |
+| `,dig` | 3 minutes | Usually 10–100; 20% chance of a treasure chest worth 500–5,000 |
+| `,loot` | 1 minute | Loot a location for 50–500 |
+| `,hunt` | 5 minutes | Hunt rabbit, deer, bear, or boar for 100–1,500 |
+| `,farm` | 3 hours | Harvest wheat, corn, potatoes, or carrots for 100–800 |
+| `,raid` | 10 minutes | 50% chance to earn 1,000–5,000; failure costs 500–2,000 |
+
+<Tip>
+`,dig` has a 20% chance of a large find. If you're patient, it can be one of the best-value commands.
+</Tip>
+
+---
+
+## Quests
+
+Quests give you a named objective with a set coin reward and XP bonus. You can hold multiple active quests and complete them at any time.
+
+<Steps>
+  <Step title="Get a quest">
+    Run `,quest` to be assigned a random quest (collect herbs, defeat goblins, deliver a package, or escort a merchant). Each quest comes with a coin reward and XP.
+
+    ```
+    ,quest
+    ```
+
+    <Note>`,quest` has a 30-minute cooldown.</Note>
+  </Step>
+  <Step title="View active quests">
+    See all your currently active quests and their IDs.
+
+    ```
+    ,quests
+    ```
+  </Step>
+  <Step title="Complete a quest">
+    Mark a quest as done to collect its reward. Use the quest's number from `,quests`.
+
+    ```
+    ,complete <id>
+    ```
+  </Step>
+</Steps>
+
+  </Tab>
+  <Tab title="Banking & Transfers">
+
+## Checking your balance
+
+```
+,bal
+,bal @user
+```
+
+Shows your wallet balance. Your bank balance and net worth appear as a footer.
+
+```
+,bank
+,bank @user
+```
+
+Shows your bank balance and remaining capacity.
+
+---
+
+## Moving money
+
+Your wallet is where coins you earn land by default. Money in your bank is safe — it can't be stolen by `,rob`. Your bank has a capacity limit; you can't deposit more than it allows.
+
+```
+,deposit <amount>
+,deposit all
+```
+
+Move coins from your wallet into your bank.
+
+```
+,withdraw <amount>
+,withdraw all
+```
+
+Move coins from your bank back to your wallet.
+
+---
+
+## Sending money to others
+
+Send coins from your wallet directly to another member. You cannot pay yourself.
+
+```
+,pay @user <amount>
+```
+
+---
+
+## Settings and cooldowns
+
+View your personal economy preferences (notifications, passive mode, reminder):
+```
+,eco settings
+```
+
+Check which commands are on cooldown:
+```
+,eco cooldowns
+```
+
+  </Tab>
+  <Tab title="Crime">
+
+## Rob another member
+
+Attempt to steal coins directly from another member's wallet. You have a 40% chance of success. On success, you steal between 100 coins and 25% of their wallet (capped at 10,000). On failure, you're caught and fined 500–5,000 coins.
+
+```
+,rob @user
+```
+
+The target must have at least 100 coins in their wallet to be worth robbing. There is a 5-minute cooldown.
+
+<Warning>
+Only coins in a member's **wallet** can be stolen. Money in the bank is always safe.
+</Warning>
+
+---
+
+## Commit a crime
+
+Pick a random crime — pickpocketing, shoplifting, burglary, or scamming — each with its own success rate and payout range. Higher-risk crimes pay more but are less likely to succeed.
+
+```
+,crime
+```
+
+| Crime | Success rate | Win | Fail fine |
+|---|---|---|---|
+| Pickpocket | 60% | 100–500 | 50–200 |
+| Shoplift | 55% | 200–800 | 100–400 |
+| Burglary | 40% | 500–2,000 | 300–1,000 |
+| Scam | 50% | 300–1,500 | 200–600 |
+
+`,crime` has a 10-minute cooldown.
+
+  </Tab>
+  <Tab title="Jobs">
+
+## Available jobs
+
+Jobs give your character a persistent role in the world and unlock the `,job bonus` command. Higher-tier jobs require a minimum net worth before you can apply.
+
+```
+,job list
+```
+
+| Job | Salary range | Net worth required |
+|---|---|---|
+| Miner | 200–500 | None |
+| Farmer | 150–400 | None |
+| Fisher | 180–450 | None |
+| Merchant | 300–800 | 1,000 |
+| Guard | 400–1,000 | 2,000 |
+| Blacksmith | 500–1,200 | 3,000 |
+
+---
+
+## Managing your job
+
+<Steps>
+  <Step title="Apply for a job">
+    ```
+    ,job apply <job name>
+    ```
+    Example: `,job apply Merchant`
+  </Step>
+  <Step title="View your current job">
+    See your job title, rank, salary range, and hours worked.
+
+    ```
+    ,job info
+    ```
+  </Step>
+  <Step title="Check your stats">
+    View your attendance and performance percentages.
+
+    ```
+    ,job stats
+    ```
+  </Step>
+  <Step title="Check hours worked">
+    See how many hours you've logged this week.
+
+    ```
+    ,job hours
+    ```
+  </Step>
+  <Step title="Try for a promotion">
+    Spend coins to increase your job rank (max rank 5). Each promotion costs `1,000 × current rank`.
+
+    ```
+    ,job promote
+    ```
+  </Step>
+  <Step title="Claim a bonus">
+    30% chance of earning a performance bonus between 500 and 2,000 coins.
+
+    ```
+    ,job bonus
+    ```
+  </Step>
+  <Step title="Quit your job">
+    Leave your current position. You can apply for a different job afterward.
+
+    ```
+    ,job quit
+    ```
+  </Step>
+</Steps>
+
+You can also check salary or requirements for a specific job without applying:
+```
+,job salary <job name>
+,job requirements <job name>
+```
+
+  </Tab>
+  <Tab title="Shop & Inventory">
+
+## Browsing the shop
+
+```
+,shop
+,shop items
+```
+
+The shop is organized into categories (tools, food, pets, vehicles, weapons, armor, accessories, materials). Use `,shop items` to browse all purchasable items with their IDs and prices.
+
+---
+
+## Buying and selling
+
+Purchase an item using its ID from `,shop items`. Optionally specify a quantity.
+
+```
+,buy <item id> [quantity]
+```
+
+Sell items from your inventory back to the shop for half their purchase price.
+
+```
+,sell <item id> [quantity]
+```
+
+---
+
+## Inventory
+
+View your own inventory or another member's:
+
+```
+,inv
+,inv @user
+```
+
+  </Tab>
+  <Tab title="Gambling">
+
+<Warning>
+Gambling can result in losing coins. Never bet more than you're comfortable losing.
+</Warning>
+
+## Coin flip
+
+A pure 50/50 bet. Guess correctly and you double your wager; guess wrong and you lose it.
+
+```
+,coinflip <amount> <heads|tails>
+```
+
+Example: `,coinflip 500 heads`
+
+---
+
+## Slots
+
+Spin three reels. Matching two adjacent reels returns your bet. Matching all three pays a multiplier based on the symbol:
+
+| Symbol | 3× multiplier |
+|---|---|
+| CHR | 3× |
+| LEM | 4× |
+| ORN | 5× |
+| BEL | 10× |
+| GEM | 20× |
+| SEV | 50× |
+
+```
+,slots <amount>
+```
+
+---
+
+## Blackjack
+
+Play a hand of blackjack against the dealer. Once you start a game, use sub-commands to take actions:
+
+```
+,blackjack <amount>
+```
+
+During the game:
+```
+,blackjack hit
+,blackjack stand
+,blackjack double
+,blackjack split
+,blackjack surrender
+```
+
+  </Tab>
+</Tabs>

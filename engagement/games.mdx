@@ -1,0 +1,259 @@
+---
+title: "Games, Snipe Commands & Auto-Response Triggers"
+description: "Play Rock Paper Scissors and Tic-Tac-Toe, recover deleted messages with snipe, and set up automatic reactions and replies triggered by keywords."
+sidebarTitle: "Games"
+---
+
+Luster includes a handful of interactive features to keep your server lively: two classic games you can play against the bot or a friend, snipe commands that let you recover recently deleted or edited messages, and a trigger system that lets admins (and optionally boosters) configure automatic reactions and replies to keywords.
+
+---
+
+## Rock Paper Scissors
+
+Challenge Luster or another member to a game of Rock Paper Scissors. When you play against a person, both of you choose your move using the buttons that appear — Luster waits for both picks before revealing the result.
+
+```
+,rps
+,rps @user
+```
+
+- Running `,rps` with no argument pits you against Luster's AI, which picks randomly.
+- Running `,rps @user` challenges that member. Both players see their own choice buttons; the result is shown once both have picked.
+
+<Note>
+You cannot challenge yourself.
+</Note>
+
+---
+
+## Tic-Tac-Toe
+
+Start a Tic-Tac-Toe game on an interactive 3×3 board. You play as **X** and your opponent (or the AI) plays as **O**. Tap the buttons on the grid to place your mark — the board updates in real time.
+
+```
+,ttt
+,ttt @user
+```
+
+- Running `,ttt` with no argument starts a solo game against Luster's AI. The AI moves automatically about 0.8 seconds after your turn.
+- Running `,ttt @user` invites that member to play. It's their turn when the board shows their name.
+
+<Tip>
+Games time out after 2 minutes of inactivity. The board buttons are disabled when the game ends.
+</Tip>
+
+---
+
+## Snipe
+
+Snipe commands let you recover messages that were recently deleted or edited in a channel. Luster keeps a history of the last 10 deleted messages, 10 edited messages, and 10 removed reactions per channel.
+
+<AccordionGroup>
+  <Accordion title=",snipe — Recover a deleted message">
+    Show the most recently deleted message in the current channel, including who sent it and when.
+
+    ```
+    ,snipe
+    ,snipe 2
+    ```
+
+    Pass a number (1–10) to go further back in history. `,snipe 1` is the same as `,snipe` with no argument.
+  </Accordion>
+
+  <Accordion title=",editsnipe — Recover an edited message">
+    Show the before and after content of the most recently edited message in the channel.
+
+    ```
+    ,editsnipe
+    ,editsnipe 2
+    ```
+  </Accordion>
+
+  <Accordion title=",emojisnipe — Recover a removed reaction">
+    Show the most recently removed reaction in the channel, including which emoji was removed and who removed it.
+
+    ```
+    ,emojisnipe
+    ,es
+    ,emojisnipe 2
+    ```
+
+    `,es` is a shorthand alias for `,emojisnipe`.
+  </Accordion>
+</AccordionGroup>
+
+<Note>
+Snipe only captures messages from non-bot users. Bot messages are not stored.
+</Note>
+
+---
+
+## Reaction triggers
+
+Reaction triggers tell Luster to add one or more emoji reactions to any message that contains a specific word or phrase. These are server-wide and require the **Manage Messages** permission to configure.
+
+<Steps>
+  <Step title="Add a reaction trigger">
+    Specify the trigger word and one or more emoji. By default matching is case-insensitive; add `--case_sensitive` to require an exact case match.
+
+    ```
+    ,reaction add <word> <emoji> [emoji2 ...] [--case_sensitive]
+    ```
+
+    Example: `,reaction add hello 👋 😊`
+  </Step>
+  <Step title="List all reaction triggers">
+    ```
+    ,reaction list
+    ```
+  </Step>
+  <Step title="Remove a reaction trigger">
+    ```
+    ,reaction remove <word>
+    ```
+  </Step>
+  <Step title="Clear all reaction triggers">
+    ```
+    ,reaction clear
+    ```
+  </Step>
+</Steps>
+
+### Booster reaction triggers
+
+Server admins can optionally let designated boosters (or whitelisted users) create their own personal reaction triggers. These fire only on that user's messages.
+
+<AccordionGroup>
+  <Accordion title="Admin: enable or disable booster reactions">
+    ```
+    ,reaction booster enable
+    ,reaction booster disable
+    ```
+
+    Disabling removes all existing booster triggers immediately.
+  </Accordion>
+
+  <Accordion title="Admin: add or remove a booster/user">
+    Grant or revoke trigger creation rights for a role or user (toggles on repeat):
+
+    ```
+    ,reaction booster <@role>
+    ,reaction booster <@user>
+    ```
+  </Accordion>
+
+  <Accordion title="Admin: maintain triggers after someone stops boosting">
+    By default, booster triggers are removed when someone loses booster status. Toggle this off:
+
+    ```
+    ,reaction booster maintain on
+    ,reaction booster maintain off
+    ```
+  </Accordion>
+
+  <Accordion title="Booster: add your own trigger">
+    ```
+    ,reaction booster add <word> <emoji> [--case_sensitive]
+    ```
+  </Accordion>
+
+  <Accordion title="Booster: remove your trigger">
+    ```
+    ,reaction booster remove <word>
+    ,reaction booster remove
+    ```
+
+    Omitting the word removes all of your booster triggers.
+  </Accordion>
+
+  <Accordion title="Booster: share your trigger with another user">
+    Let another member's messages also trigger your personal reaction:
+
+    ```
+    ,reaction booster share @user
+    ,reaction booster sharelist
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## AutoReply triggers
+
+AutoReply triggers make Luster automatically reply to any message containing a specific word or phrase. The reply is sent as a response to the original message. Requires **Manage Messages** to set up.
+
+<Steps>
+  <Step title="Add an autoreply trigger">
+    Specify the trigger word and the reply text. Optional flags:
+    - `--case_sensitive` — only match if the case is identical
+    - `--self_destruct=<seconds>` — auto-delete Luster's reply after 3–10 seconds
+
+    ```
+    ,autoreply add <word> <reply text> [--case_sensitive] [--self_destruct=5]
+    ```
+
+    Example: `,autoreply add rules Please read #rules before asking!`
+  </Step>
+  <Step title="List all autoreplies">
+    ```
+    ,autoreply list
+    ```
+  </Step>
+  <Step title="Remove an autoreply">
+    ```
+    ,autoreply remove <word>
+    ```
+  </Step>
+  <Step title="Clear all autoreplies">
+    ```
+    ,autoreply clear
+    ```
+  </Step>
+</Steps>
+
+### Booster autoreply triggers
+
+The booster autoreply system mirrors the booster reaction system — admins can enable it so that designated users can set their own personal autoreplies that fire only on their own messages.
+
+<AccordionGroup>
+  <Accordion title="Admin: enable or disable booster autoreplies">
+    ```
+    ,autoreply booster enable
+    ,autoreply booster disable
+    ```
+  </Accordion>
+
+  <Accordion title="Admin: grant or revoke rights for a role or user">
+    ```
+    ,autoreply booster <@role>
+    ,autoreply booster <@user>
+    ```
+  </Accordion>
+
+  <Accordion title="Admin: maintain triggers after someone stops boosting">
+    ```
+    ,autoreply booster maintain on
+    ,autoreply booster maintain off
+    ```
+  </Accordion>
+
+  <Accordion title="Booster: add, remove, or share your autoreply">
+    ```
+    ,autoreply booster add <word> <reply> [--case_sensitive] [--self_destruct=5]
+    ,autoreply booster remove <word>
+    ,autoreply booster remove
+    ,autoreply booster share @user
+    ,autoreply booster sharelist
+    ```
+  </Accordion>
+
+  <Accordion title="Admin: view all booster autoreplies">
+    ```
+    ,autoreply booster list
+    ```
+  </Accordion>
+</AccordionGroup>
+
+<Warning>
+AutoReply triggers fire on every matching message in every channel. Be specific with your trigger words to avoid unintended replies.
+</Warning>

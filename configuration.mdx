@@ -1,0 +1,153 @@
+---
+title: "Configure Luster: prefix, permissions, and responses"
+description: "Customize Luster's prefix, control who can run moderation commands with fake permissions, and personalize mod responses with custom invoke messages."
+sidebarTitle: "Configuration"
+---
+
+Before you start using Luster's features in full, a few configuration steps will make the bot fit your server's needs. This page covers the three most important settings: your command prefix, role-based permission overrides, and custom moderation response messages.
+
+## Custom prefix
+
+Luster's default prefix is `,`. You can change it to any string up to 10 characters, such as `!`, `?`, or `>>`.
+
+**View your current prefix**
+
+```
+,prefix
+```
+
+**Set a new prefix**
+
+```
+,prefix set <prefix>
+```
+
+For example, to switch to `!`:
+
+```
+,prefix set !
+```
+
+Luster will confirm the change and show you an example of the new prefix in use. From that point on, all commands on your server use the new prefix.
+
+**Reset to the default prefix**
+
+```
+,prefix remove
+```
+
+This removes any custom prefix and returns Luster to using `,`.
+
+<Warning>
+  Both `,prefix set` and `,prefix remove` require the **Administrator** permission. Regular moderators cannot change the prefix.
+</Warning>
+
+---
+
+## Help command and categories
+
+Run `,help` at any time to see a menu of all command categories. To browse commands inside a specific category, pass the category name:
+
+```
+,help <category>
+```
+
+Luster's command categories are:
+
+| Category | Description |
+|---|---|
+| `utility` | General utility commands |
+| `fun` | Commands for entertainment |
+| `mod` | Moderation and server protection |
+| `social` | Social commands for members |
+| `economy` | Currency, jobs, and trading |
+| `premium` | Exclusive paid features |
+| `server` | Server setup and tools |
+| `FM` | Last.fm music integration |
+| `pokemon` | Pokémon catching and collection |
+
+You can also run `,help <command>` on any individual command to see its syntax, required permissions, and an example.
+
+---
+
+## Permissions
+
+Luster respects Discord's built-in permission system. For example, the `,ban` command requires the member running it to have the **Ban Members** permission in Discord.
+
+### Fake permissions
+
+Fake permissions let you grant specific Luster moderation capabilities to a role without giving that role the corresponding Discord permission. This is useful when you want a custom "Moderator" role to run `,mute` or `,kick` without having the full Discord **Kick Members** or **Manage Roles** flags.
+
+**Add fake permissions to a role**
+
+```
+,fakepermissions add <role> <permissions>
+```
+
+Separate multiple permissions with commas:
+
+```
+,fakepermissions add @Moderator kick_members, ban_members
+```
+
+**Valid permissions**
+
+| Permission | What it unlocks |
+|---|---|
+| `ban_members` | `,ban`, `,hardban`, `,unban`, `,unhardban`, `,bans` |
+| `kick_members` | `,kick` |
+| `manage_roles` | `,mute`, `,unmute`, `,setupmute`, `,resetmute` |
+| `manage_channels` | Channel lock and hide commands |
+| `moderate_members` | `,timeout`, `,untimeout`, `,timeouts` |
+| `manage_messages` | `,muted`, `,forcenick` |
+| `manage_nicknames` | `,forcenicklist` |
+| `administrator` | All of the above |
+
+**Other fake permission commands**
+
+```
+,fakepermissions remove <role> <permissions>
+,fakepermissions view <role>
+,fakepermissions reset <role>
+,fakepermissions list
+```
+
+<Note>
+  Setting up fake permissions requires the **Administrator** Discord permission. Fake permissions only affect Luster's own checks — they do not grant any real Discord permissions to the role.
+</Note>
+
+---
+
+## Custom invoke messages
+
+By default, when you run a moderation command like `,ban`, Luster replies with a standard confirmation message. The invoke system lets you replace that response with your own custom text — useful for giving your moderation actions a personal tone or including additional context.
+
+**Set a custom message for a command**
+
+```
+,invoke set <command> <message>
+```
+
+For example, to customize what Luster says when you run `,ban`:
+
+```
+,invoke set ban You have been removed from the server. Appeal at discord.gg/example.
+```
+
+After setting this, every time you personally run `,ban`, Luster will send your custom message instead of its default response.
+
+**View, clear, and list invoke messages**
+
+```
+,invoke view <command>
+,invoke clear <command>
+,invoke list
+```
+
+<Info>
+  Custom invoke messages are scoped to your user account within the server. Different moderators can have different invoke messages for the same command.
+</Info>
+
+<Tip>
+  You can use invoke messages to include appeal links, warn of further consequences, or match the communication style your server uses with members.
+</Tip>

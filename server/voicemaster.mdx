@@ -1,0 +1,88 @@
+---
+title: "VoiceMaster: User-Controlled Temporary Voice Channels"
+description: "Let members create and manage their own temporary voice channels with lock, ghost, and rename controls. Channels delete automatically when empty."
+sidebarTitle: "VoiceMaster"
+---
+
+VoiceMaster gives your members the ability to create personal, temporary voice channels on demand. When someone joins a designated **Create** channel, Luster spawns a new voice channel named after them and moves them into it. They get full control over that channel through a persistent control panel. When the last person leaves, Luster deletes the channel automatically — no manual cleanup needed.
+
+## Setting up VoiceMaster
+
+<Steps>
+  <Step title="Run the setup command">
+    ```
+    ,voicemaster setup
+    ```
+
+    Luster creates everything it needs in one go:
+
+    - A **luster** category
+    - A **#panel** text channel (read-only for members) containing the control panel
+    - A **Create** voice channel — joining this triggers a new temporary VC
+  </Step>
+  <Step title="Point members to the Create channel">
+    Tell your members to join the **Create** voice channel whenever they want a temporary channel. Luster moves them to their own channel immediately after.
+  </Step>
+</Steps>
+
+<Note>
+  You need the **Administrator** permission to run `,voicemaster setup`. The alias `,vm setup` works as a shorthand.
+</Note>
+
+## Member controls
+
+Once a member is in their temporary voice channel, they can use the buttons on the **Voice Master Control Panel** in the `#panel` channel. Only the channel's owner can use these controls.
+
+<AccordionGroup>
+  <Accordion title="Lock and unlock">
+    **Lock** prevents anyone from joining the channel. **Unlock** re-opens it to everyone.
+
+    Members who are already inside the channel are not affected when you lock it.
+  </Accordion>
+  <Accordion title="Ghost and unghost">
+    **Ghost** hides the channel from the channel list for everyone who is not already in it. **Unghost** makes it visible again.
+
+    Use ghost to create a hidden session without blocking joins outright — or combine ghost and lock for a fully private channel.
+  </Accordion>
+  <Accordion title="Rename">
+    Clicking **Rename** opens a modal where you can type a new name for your channel. The change takes effect immediately.
+
+    <Tip>
+      Discord rate-limits channel renames to 2 per 10 minutes. Avoid renaming repeatedly in quick succession.
+    </Tip>
+  </Accordion>
+  <Accordion title="Mute and unmute a user">
+    **Mute** opens a user picker. Select someone in the channel to prevent them from speaking. **Unmute** restores their speak permission.
+
+    This only affects speak permission in your channel — it does not server-mute the user.
+  </Accordion>
+  <Accordion title="Info">
+    Shows when your channel was created, how old it is (in hours), and how many unique members have joined it during the session.
+  </Accordion>
+  <Accordion title="Delete">
+    Permanently deletes your temporary channel. Everyone inside is disconnected immediately.
+  </Accordion>
+</AccordionGroup>
+
+## Automatic cleanup
+
+Luster monitors voice state changes. When the last member leaves a temporary channel, Luster deletes it without any action needed from you or your staff.
+
+## Resetting VoiceMaster
+
+To remove VoiceMaster entirely — including all active temporary channels, the panel channel, the Create channel, and the category — run:
+
+```
+,voicemaster reset
+```
+
+<Warning>
+  `,voicemaster reset` (or `,vm reset`) deletes all channels Luster created during setup, including any currently active temporary voice channels. Members inside those channels will be disconnected.
+</Warning>
+
+## Command reference
+
+| Command | Alias | Permission | Description |
+|---|---|---|---|
+| `,voicemaster setup` | `,vm setup` | Administrator | Create the VoiceMaster category, panel, and Create channel. |
+| `,voicemaster reset` | `,vm reset` | Administrator | Delete all VoiceMaster channels and wipe the configuration. |

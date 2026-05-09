@@ -1,0 +1,154 @@
+---
+title: "Giveaways, Bump Reminders & Leaderboards"
+description: "Run timed giveaways with automatic winner selection, and keep your Disboard listing active with automatic bump reminders and leaderboards."
+sidebarTitle: "Giveaways"
+---
+
+Luster includes two engagement tools: a giveaway system that handles entries and selects winners automatically, and a bump reminder system that pings your community when your Disboard listing is ready to be bumped again.
+
+---
+
+## Giveaways
+
+A giveaway posts a message with an **Enter** button. Members click to enter, and when the timer runs out Luster picks winners at random from the entry list and announces them.
+
+### Creating a giveaway
+
+```
+,giveaway create <duration> <winners> <prize>
+```
+
+- **`duration`** — how long the giveaway runs. Use a number followed by `s` (seconds), `m` (minutes), `h` (hours), or `d` (days). Example: `24h`, `7d`, `30m`.
+- **`winners`** — how many winners to select.
+- **`prize`** — the prize description (can include spaces).
+
+<CodeGroup>
+
+```text 24-hour giveaway, 1 winner
+,giveaway create 24h 1 Discord Nitro
+```
+
+```text 3-day giveaway, 3 winners
+,giveaway create 3d 3 Server Boost
+```
+
+```text 30-minute quick giveaway
+,giveaway create 30m 1 Custom Role
+```
+
+</CodeGroup>
+
+<Note>
+  You need the **Administrator** permission to create giveaways.
+</Note>
+
+### How members enter
+
+After you run the create command, Luster posts a giveaway panel in the current channel. Members click **Enter** on that message. Each member can only enter once. The panel shows the current entry count and the number of winners in real time.
+
+### Rerolling winners
+
+If a winner is ineligible or cannot be contacted after a giveaway ends, reroll to pick a fresh set of winners from the same entry list:
+
+```
+,giveaway reroll <message_id>
+```
+
+The new winners are announced in the channel where you ran the command.
+
+<Tip>
+  To get the message ID, right-click (or long-press on mobile) the giveaway message and select **Copy Message ID**. You may need to enable Developer Mode in your Discord settings first (**Settings → Advanced → Developer Mode**).
+</Tip>
+
+<Warning>
+  Reroll requires at least as many entries as there are winners. If the giveaway had fewer entries than the winner count, the reroll will fail.
+</Warning>
+
+### Giveaway command reference
+
+| Command | Permission | Description |
+|---|---|---|
+| `,giveaway create <duration> <winners> <prize>` | Administrator | Start a new giveaway in the current channel. |
+| `,giveaway reroll <message_id>` | Administrator | Pick new winners from the entry list of an ended giveaway. |
+
+---
+
+## Bump reminders
+
+Disboard lets you bump your server listing every 2 hours to keep it near the top of search results. Luster watches for successful bumps and automatically reminds you — or a designated role — when it is time to bump again.
+
+### Enabling bump reminders
+
+<Steps>
+  <Step title="Enable the feature">
+    ```
+    ,bumpremind on
+    ```
+  </Step>
+  <Step title="(Optional) Set a ping role">
+    If you want a specific role pinged when the reminder fires, set it here:
+
+    ```
+    ,bumpremind ping @Bumpers
+    ```
+
+    Run `,bumpremind ping` with no role to clear the ping.
+  </Step>
+  <Step title="(Optional) Write a custom reminder message">
+    The default message is: `thanks {user.mention} for bumping, we'll remind in {hours} hours.`
+
+    To change it:
+
+    ```
+    ,bumpremind message It's time to bump! {user.mention} bumped last — who's next?
+    ```
+
+    Use `,bumpremind variables` to see all placeholders you can include.
+  </Step>
+</Steps>
+
+### Bump reminder variables
+
+| Variable | Description |
+|---|---|
+| `{user}` | Mention of the last person who bumped |
+| `{user.name}` | Their username |
+| `{user.display_name}` | Their server display name |
+| `{server}` | Server name |
+| `{server.member_count}` | Current member count |
+| `{channel}` | The channel where the reminder is sent |
+| `{hours}` | Hours until the next bump is available |
+| `{time}` | Current time (HH:MM) |
+| `{date}` | Current date |
+
+Run `,bumpremind variables` in Discord to see the full paginated list.
+
+### Leaderboards
+
+Luster tracks how many times each member has bumped and maintains both a server leaderboard and a global leaderboard across all servers.
+
+```
+,bumpremind leaderboard
+,bumpremind gboard
+```
+
+You can also check the stats for a specific member:
+
+```
+,bumpremind stats @username
+```
+
+### Bump reminder command reference
+
+| Command | Alias | Description |
+|---|---|---|
+| `,bumpremind` | — | Show current configuration. |
+| `,bumpremind on` | — | Enable bump reminders. |
+| `,bumpremind off` | — | Disable bump reminders. |
+| `,bumpremind ping <role>` | — | Set a role to ping when the reminder fires. Pass no role to clear. |
+| `,bumpremind message <text>` | — | Set a custom reminder message (max 500 characters). |
+| `,bumpremind variables` | — | Browse available variables for the custom message. |
+| `,bumpremind leaderboard` | `,bumpremind lb` | Show the top bumpers in this server. |
+| `,bumpremind gboard` | `,bumpremind global` | Show the top bumpers across all servers. |
+| `,bumpremind stats [@user]` | — | Show bump stats for yourself or another member. |
+| `,bumpremind reset` | — | Reset all bump remind settings for this server. |

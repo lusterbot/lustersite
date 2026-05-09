@@ -1,0 +1,98 @@
+{
+  "projectType": "saas",
+  "projectName": "Luster",
+  "projectDescription": "A feature-rich Discord bot for server management, moderation, economy, leveling, and community engagement.",
+  "theme": "almond",
+  "primaryColor": "#7c5cbf",
+  "lightColor": "#a07ee0",
+  "darkColor": "#5a3fa0",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart",
+              "configuration"
+            ]
+          },
+          {
+            "group": "Moderation",
+            "pages": [
+              "moderation/overview",
+              "moderation/antinuke",
+              "moderation/automod",
+              "moderation/muting"
+            ]
+          },
+          {
+            "group": "Server Tools",
+            "pages": [
+              "server/welcome",
+              "server/tickets",
+              "server/voicemaster",
+              "server/autorole",
+              "server/starboard",
+              "server/giveaways"
+            ]
+          },
+          {
+            "group": "Engagement",
+            "pages": [
+              "engagement/levels",
+              "engagement/economy",
+              "engagement/lastfm",
+              "engagement/games"
+            ]
+          },
+          {
+            "group": "Premium",
+            "pages": [
+              "premium/overview",
+              "premium/features"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Server moderation with ban, kick, mute, timeout, and hardban commands",
+    "AntiNuke protection against mass role/channel deletion, bans, and bot invasions",
+    "AutoMod with blocked words, invite filtering, and spam detection",
+    "Customizable welcome/leave messages with rich embed builders",
+    "VoiceMaster for user-controlled temporary voice channels",
+    "Ticket system for server support management",
+    "XP-based leveling system with role rewards",
+    "Full economy system with jobs, gambling, and trading",
+    "Last.fm integration for music scrobbling and stats",
+    "Giveaway system with configurable entries and winners",
+    "Starboard for community-highlighted messages",
+    "AutoRole for automatic role assignment on member join",
+    "Premium tier with AI chat, image recognition, and OCR features",
+    "Custom prefix configuration per server",
+    "Bump reminders for server listing bots"
+  ],
+  "publicApiSurface": [
+    ",ban / ,kick / ,mute / ,timeout / ,hardban",
+    ",antinuke whitelist/admin/role/channel/ban/kick/bot/webhook/vanity",
+    ",automod addword/removeword/listwords/blockinvites",
+    ",welcome / ,goodbye setup and preview",
+    ",ticket setup / ,ticket add / ,ticket remove",
+    ",voicemaster setup / voice channel controls (lock, unlock, rename, ghost)",
+    ",autorole add/remove/list",
+    ",starboard setup/channel/emoji/threshold",
+    ",gw start / ,gw end / ,gw reroll",
+    ",rank / ,leaderboard / ,setlevel / ,resetlevel",
+    ",bal / ,daily / ,work / ,rob / ,coinflip / ,slots / ,blackjack",
+    ",job apply/quit/info/promote",
+    ",fm set / ,fm np / ,fm profile / ,fm top",
+    ",prefix set/reset",
+    ",afk / ,bump remind",
+    ",fakepermissions add/remove/view/reset/list",
+    ",invoke set/view/clear/list"
+  ]
+}

@@ -1,0 +1,90 @@
+---
+title: "Get started with Luster in under 5 minutes"
+description: "Add Luster to your Discord server, configure your command prefix, and explore moderation, leveling, and economy features with your first commands."
+sidebarTitle: "Quickstart"
+---
+
+Getting Luster up and running on your server takes only a few steps. By the end of this guide you will have Luster added, your prefix configured, and a working understanding of how to navigate its commands. No developer experience is required — everything happens directly in Discord.
+
+<Steps>
+  <Step title="Invite Luster to your server">
+    Open the official Luster invite link and select the server you want to add it to. Discord will ask you to grant Luster a set of permissions — approve these so all features work correctly. You need **Manage Server** permission on the target server to complete this step.
+
+    <Note>
+      If Luster is missing certain permissions after joining, some features may not work. You can review and fix permissions in your server's **Settings → Integrations → Luster** panel.
+    </Note>
+  </Step>
+
+  <Step title="Set your prefix">
+    Luster's default prefix is `,` (comma). If you want to use a different prefix — for example `!` — run the following command in any channel Luster can see:
+
+    ```
+    ,prefix set !
+    ```
+
+    Luster will confirm the change. From that point on, all commands on your server use the new prefix. To revert to the default at any time, run:
+
+    ```
+    ,prefix remove
+    ```
+
+    <Warning>
+      Only members with the **Administrator** permission can change or remove the prefix.
+    </Warning>
+  </Step>
+
+  <Step title="Run your first command">
+    Confirm that Luster is online and responding by running the ping command:
+
+    ```
+    ,ping
+    ```
+
+    Luster will reply with its current latency in milliseconds. You can click the **Refresh** button on the response to get an updated reading.
+
+    To view information about the bot itself — including uptime and command counts — run:
+
+    ```
+    ,botinfo
+    ```
+  </Step>
+
+  <Step title="Explore available commands">
+    The help command is your starting point for discovering everything Luster can do. Run it without arguments to see all command categories:
+
+    ```
+    ,help
+    ```
+
+    To view the commands inside a specific category, pass the category name:
+
+    ```
+    ,help mod
+    ,help server
+    ,help economy
+    ```
+
+    <Tip>
+      You can run `,help <command>` on any individual command to see its usage, required permissions, and examples. For instance, `,help ban` shows you exactly how to use the ban command.
+    </Tip>
+  </Step>
+</Steps>
+
+## What to set up next
+
+Once Luster is in your server and responding to commands, these are the most common next steps for server owners:
+
+<CardGroup cols={2}>
+  <Card title="Configure permissions" icon="lock" href="/configuration">
+    Set up fake permissions to give moderator roles access to moderation commands without granting Discord-level permissions.
+  </Card>
+  <Card title="Set up moderation" icon="shield" href="/moderation/overview">
+    Configure bans, mutes, AntiNuke, and AutoMod to keep your server safe from the start.
+  </Card>
+  <Card title="Welcome new members" icon="door-open" href="/server/welcome">
+    Create a custom welcome message that greets members when they join your server.
+  </Card>
+  <Card title="Start a leveling system" icon="chart-line" href="/engagement/levels">
+    Reward active members with XP and unlock role rewards as they level up.
+  </Card>
+</CardGroup>

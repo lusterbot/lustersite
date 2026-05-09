@@ -1,0 +1,158 @@
+---
+title: "AntiNuke: Protect Against Mass Server Attacks"
+description: "Detect and stop mass destructive actions in real time — including role wipes, channel deletions, mass bans, unauthorized bots, and vanity URL changes."
+sidebarTitle: "AntiNuke"
+---
+
+AntiNuke monitors your server for patterns that look like a coordinated attack — such as someone rapidly deleting channels or banning members — and responds automatically according to rules you define. Each protection area is a separate module you can enable or disable independently, so you stay in control of exactly what Luster watches for and how it reacts.
+
+<Warning>
+Luster's bot role **must be the absolute top role** in your server's role list for AntiNuke to function. If any other role sits above Luster's role, all AntiNuke commands will fail with an error. Move Luster to the top before enabling anything else.
+</Warning>
+
+## Setup
+
+<Steps>
+  <Step title="Move Luster's role to the top">
+    Go to **Server Settings → Roles**. Drag Luster's bot role above every other role in the list. This is required for Luster to take action against members who hold high roles.
+  </Step>
+  <Step title="Enable the modules you want">
+    Run `,antinuke <module> on [threshold] [action]` for each area you want to protect. See the modules below for the exact syntax and available options.
+  </Step>
+</Steps>
+
+## Protection modules
+
+Each module below is toggled on or off with a single command. For modules that support a threshold, the number represents how many of that action must occur within 10 seconds before Luster intervenes.
+
+### Syntax
+
+```
+,antinuke <module> on [threshold] [action]
+,antinuke <module> off
+```
+
+**Available actions:** `log`, `dm`, `kick`, `ban`, `none`
+
+The default threshold is `5` and the default action is `ban` when you don't supply values.
+
+<AccordionGroup>
+  <Accordion title="role — mass role creation/deletion">
+    Triggers when a member creates or deletes roles faster than your threshold allows.
+
+    ```
+    ,antinuke role on 5 ban
+    ,antinuke role off
+    ```
+
+    The threshold counts role create and delete events together within a 10-second window.
+  </Accordion>
+
+  <Accordion title="channel — mass channel creation/deletion">
+    Triggers when a member creates or deletes channels faster than your threshold allows.
+
+    ```
+    ,antinuke channel on 5 ban
+    ,antinuke channel off
+    ```
+  </Accordion>
+
+  <Accordion title="kick — mass kicks">
+    Triggers when a member kicks other members faster than your threshold allows.
+
+    ```
+    ,antinuke kick on 5 ban
+    ,antinuke kick off
+    ```
+  </Accordion>
+
+  <Accordion title="ban — mass bans">
+    Triggers when a member bans other members faster than your threshold allows.
+
+    ```
+    ,antinuke ban on 5 ban
+    ,antinuke ban off
+    ```
+  </Accordion>
+
+  <Accordion title="bot — unauthorized bot additions">
+    Triggers any time an unauthorized bot is added to your server. This module has no threshold — every unauthorized bot addition is treated as a violation immediately.
+
+    ```
+    ,antinuke bot on ban
+    ,antinuke bot off
+    ```
+  </Accordion>
+
+  <Accordion title="webhook — webhook spam">
+    Triggers when webhook activity in a channel exceeds your threshold.
+
+    ```
+    ,antinuke webhook on 5 ban
+    ,antinuke webhook off
+    ```
+  </Accordion>
+
+  <Accordion title="vanity — vanity URL changes">
+    Triggers any time your server's vanity URL is changed. This module has no threshold — every change is flagged immediately.
+
+    ```
+    ,antinuke vanity on ban
+    ,antinuke vanity off
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Whitelist and admins
+
+Whitelisted users and AntiNuke admins are never punished, even if they trip a threshold.
+
+**Whitelist** — bypasses all AntiNuke enforcement for that user:
+
+```
+,antinuke whitelist add <user>
+,antinuke whitelist remove <user>
+,antinuke whitelisted
+```
+
+**Admins** — trusted users who receive DM notifications and are exempt from enforcement:
+
+```
+,antinuke admin add <user>
+,antinuke admin remove <user>
+,antinuke admins
+```
+
+<Note>
+Whitelisted users and admins are stored separately. Adding someone as an admin does not automatically whitelist them — use both commands if you want a user exempt from enforcement and also receiving alerts.
+</Note>
+
+## Notifications
+
+Luster can alert you or a channel whenever it detects and acts on a violation. You can send alerts to a channel or to the DMs of all configured AntiNuke admins.
+
+```
+,antinuke notifications #channel
+,antinuke notifications dm
+```
+
+<Tip>
+Set up a private, moderator-only channel for AntiNuke notifications so alerts are visible to your team without cluttering public channels.
+</Tip>
+
+## Protected permissions
+
+You can designate specific Discord permissions as protected. When a member is granted a protected permission outside of normal channels, AntiNuke can flag it.
+
+```
+,antinuke permissions add <permission>
+,antinuke permissions remove <permission>
+```
+
+## Viewing your configuration
+
+Run `,antinuke config` at any time to see a summary of every setting — which modules are on, their thresholds and actions, your whitelist and admin counts, notification settings, and protected permissions.
+
+```
+,antinuke config
+```

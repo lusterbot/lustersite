@@ -1,0 +1,68 @@
+---
+title: "Support Tickets: Private Channels for Member Help"
+description: "Create a private support channel system where members open tickets with a button click and staff manage them through claim and close controls."
+sidebarTitle: "Tickets"
+---
+
+The ticket system gives your members a dedicated, private channel to contact staff. Instead of cluttering a public channel, members click a button on a panel message and Luster instantly creates a private text channel visible only to them, your staff, and the bot. When the issue is resolved, the channel is closed and a full transcript is saved to a private log channel automatically.
+
+## Setting up tickets
+
+<Steps>
+  <Step title="Create a category for tickets">
+    In Discord, create a category where ticket channels will live (for example, **Support**). The channel you point Luster to must already be inside that category — Luster uses the same category for all ticket channels it creates.
+  </Step>
+  <Step title="Run the setup command">
+    Point Luster to the channel where you want the **Open Ticket** button posted.
+
+    ```
+    ,ticket setup #support
+    ```
+
+    Luster will:
+    - Post a persistent panel with an **Open Ticket** button in `#support`
+    - Automatically create a `#ticket-logs` channel in the same category (staff-only)
+  </Step>
+</Steps>
+
+<Note>
+  You need the **Administrator** permission to run `,ticket setup`.
+</Note>
+
+## How members open a ticket
+
+Once the panel is posted, any member can click **Open Ticket** to create their own private channel. Luster checks whether they already have an open ticket — if they do, it tells them which channel to use instead of creating a duplicate.
+
+Each new ticket channel is named `ticket-1`, `ticket-2`, and so on, and is only readable by the member who opened it, Luster, and anyone with the **Manage Channels** permission.
+
+## Staff controls
+
+Inside every ticket channel, Luster posts a **Ticket Control** panel with two buttons:
+
+| Button | Who can use it | What it does |
+|---|---|---|
+| **Claim** | Staff (Manage Channels) | Grants you explicit read and send access to the channel, marking it as your responsibility. |
+| **Close** | Ticket creator or staff | Announces a 5-second countdown, saves a full transcript to `#ticket-logs`, then deletes the channel. |
+
+<Tip>
+  Transcripts are plain-text files attached to a message in `#ticket-logs`. They include every non-bot message with the author's ID, name, and message content.
+</Tip>
+
+## Resetting the ticket system
+
+If you need to start fresh, the reset command removes all ticket channels, the log channel, and the stored configuration for your server.
+
+```
+,ticket reset
+```
+
+<Warning>
+  `,ticket reset` deletes every channel whose name starts with `ticket-`, including `ticket-logs`, from the category. This cannot be undone.
+</Warning>
+
+## Command reference
+
+| Command | Permission | Description |
+|---|---|---|
+| `,ticket setup <#channel>` | Administrator | Post the ticket panel in the specified channel and configure the system. |
+| `,ticket reset` | Administrator | Remove all ticket channels and wipe the configuration. |

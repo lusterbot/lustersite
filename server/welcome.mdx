@@ -1,0 +1,148 @@
+---
+title: "Welcome & Goodbye Messages with Custom Variables"
+description: "Send automatic messages when members join or leave your server. Customize text or rich embeds with dynamic variables for a personal touch."
+sidebarTitle: "Welcome"
+---
+
+Welcome messages greet new members the moment they join your server, while goodbye messages mark when someone leaves. You can send a plain text message, a rich embed, or both — and even DM the joining member directly. All messages support dynamic variables that resolve to live data such as the member's name, your server's member count, and more.
+
+## Setting up welcome messages
+
+<Steps>
+  <Step title="Set a welcome channel">
+    Tell Luster which channel to post in when someone joins.
+
+    ```
+    ,welcome set #welcome
+    ```
+  </Step>
+  <Step title="Write your welcome message">
+    Set the text that gets sent. You can use any of the variables listed below.
+
+    ```
+    ,welcome msg Welcome {user.mention} to {server}! You are member #{server.member_count}.
+    ```
+  </Step>
+  <Step title="Preview and verify">
+    Run the test command to see exactly what every message will look like before a real member joins. Variables are resolved against your own account.
+
+    ```
+    ,welcome test
+    ```
+  </Step>
+</Steps>
+
+<Note>
+  You need the **Manage Server** permission to use all `welcome` commands.
+</Note>
+
+## Welcome command reference
+
+| Command | Description |
+|---|---|
+| `,welcome set <#channel>` | Set the channel where welcome messages are posted. |
+| `,welcome msg <text>` | Set the plain-text welcome message. |
+| `,welcome variables` | Browse all available variables (paginated). |
+| `,welcome ping <#channel>` | Set a channel to mention the new member in (auto-deleted after 5 seconds). |
+| `,welcome dm <on\|off> [text]` | Enable or disable a direct message to new members, with optional custom content. |
+| `,welcome embedbuilder [welcome\|dm\|leave]` | Open the interactive embed builder for the welcome, DM, or leave embed. |
+| `,welcome test` | Preview the welcome, ping, DM, and leave messages in the current channel. |
+
+## Setting up goodbye messages
+
+When a member leaves or is removed, Luster posts to your designated leave channel.
+
+<Steps>
+  <Step title="Set a leave channel">
+    ```
+    ,welcome leave #goodbye
+    ```
+  </Step>
+  <Step title="Write your goodbye message">
+    ```
+    ,welcome leavemsg {user.name} has left {server}. We now have {server.member_count} members.
+    ```
+  </Step>
+  <Step title="Preview">
+    ```
+    ,welcome test
+    ```
+  </Step>
+</Steps>
+
+## Using rich embeds
+
+Instead of plain text, you can configure a full Discord embed for welcome, DM, and leave messages. Use the interactive embed builder — it lets you set the title, description, author, footer, thumbnail, image, and color without writing any JSON.
+
+```
+,welcome embedbuilder welcome
+,welcome embedbuilder dm
+,welcome embedbuilder leave
+```
+
+<Tip>
+  All embed fields support the same variables as plain-text messages. For example, set the thumbnail to `{user.avatar}` to automatically show the new member's avatar.
+</Tip>
+
+## Available variables
+
+You can use these placeholders anywhere in your message text or embed fields. Luster replaces them with live values when the message is sent.
+
+<AccordionGroup>
+  <Accordion title="User variables">
+    | Variable | Description |
+    |---|---|
+    | `{user}` | Mentions the user (alias for `{user.mention}`) |
+    | `{user.name}` | Username |
+    | `{user.display_name}` | Server display name |
+    | `{user.mention}` | User mention |
+    | `{user.id}` | User ID |
+    | `{user.tag}` | Username#0000 |
+    | `{user.avatar}` | Avatar URL |
+    | `{user.created_at}` | Account creation date |
+    | `{user.joined_at}` | Server join date |
+    | `{user.account_age}` | How long ago the account was created (e.g., `2y 3mo`) |
+    | `{user.join_position}` | The member's position in the join order |
+    | `{user.banner}` | User banner URL |
+    | `{user.accent_color}` | User accent color hex |
+    | `{user.premium_since}` | Date the member started boosting |
+    | `{user.bot}` | Whether the user is a bot (`Yes` / `No`) |
+  </Accordion>
+  <Accordion title="Server variables">
+    | Variable | Description |
+    |---|---|
+    | `{server}` | Server name (alias for `{server.name}`) |
+    | `{server.name}` | Server name |
+    | `{server.id}` | Server ID |
+    | `{server.member_count}` | Total member count |
+    | `{server.boost_count}` | Number of active boosts |
+    | `{server.booster_count}` | Number of members currently boosting |
+    | `{server.verification_level}` | Server verification level |
+    | `{server.created_at}` | Server creation date |
+    | `{server.icon}` | Server icon URL |
+    | `{server.banner}` | Server banner URL |
+    | `{server.owner}` | Server owner mention |
+  </Accordion>
+  <Accordion title="Channel, invite & time variables">
+    | Variable | Description |
+    |---|---|
+    | `{channel}` | Channel mention (alias for `{channel.mention}`) |
+    | `{channel.name}` | Channel name |
+    | `{channel.id}` | Channel ID |
+    | `{channel.mention}` | Channel mention |
+    | `{invite.code}` | The invite code used to join |
+    | `{invite.inviter}` | Mention of whoever created the invite |
+    | `{invite.inviter.name}` | Name of the inviter |
+    | `{invite.uses}` | How many times the invite has been used |
+    | `{time}` | Current time (HH:MM) |
+    | `{timestamp}` | Full timestamp |
+    | `{unix}` | Unix timestamp |
+    | `{date}` | Current date |
+    | `{random.user}` | Mention of a random server member |
+    | `{random.number}` | Random number between 1 and 100 |
+  </Accordion>
+</AccordionGroup>
+
+<Warning>
+  The `{invite.*}` variables require Luster to have the **Manage Guild** permission so it can read invite data. Without it, those variables will resolve to an empty string.
+</Warning>

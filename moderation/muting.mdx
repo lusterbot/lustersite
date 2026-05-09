@@ -1,0 +1,133 @@
+---
+title: "Muting Members: Text, Reactions, and Images"
+description: "Silence members partially or fully using Luster's three mute types — standard, reaction, and image mutes — each with optional timed durations."
+sidebarTitle: "Muting"
+---
+
+Luster gives you three distinct ways to restrict a member's ability to participate in your server: a full text mute that blocks sending messages and reactions, a reaction mute that only prevents adding emoji reactions, and an image mute that blocks attachments and image links. All three support optional durations so mutes can lift automatically without any follow-up from your team.
+
+## Initial setup
+
+Before you can mute anyone, you need to run setup once. This creates the role and channel permission overrides that power the mute system.
+
+<Steps>
+  <Step title="Run the setup command">
+    ```
+    ,setupmute
+    ```
+
+    Luster creates a **Muted** role and applies permission overrides to every text channel, blocking muted members from sending messages or adding reactions.
+  </Step>
+  <Step title="Check the role position (optional but recommended)">
+    Open **Server Settings → Roles** and confirm the Muted role sits below any roles your members hold. If a member's role is below Muted in the list, the permission override may not apply correctly.
+  </Step>
+</Steps>
+
+<Warning>
+If you already have a role named **Muted**, `,setupmute` will refuse to run. Either delete the existing role manually or use `,resetmute` first to clear the old configuration before running setup again.
+</Warning>
+
+### Resetting the mute system
+
+`,resetmute` removes the Muted role, clears all active mute records, and strips channel overrides. Use this if you want to start fresh or remove the mute system entirely.
+
+```
+,resetmute
+```
+
+## Duration format
+
+All mute commands accept an optional duration. Omit it for a permanent mute.
+
+| Suffix | Unit    | Example |
+|--------|---------|---------|
+| `s`    | Seconds | `30s`   |
+| `m`    | Minutes | `10m`   |
+| `h`    | Hours   | `2h`    |
+| `d`    | Days    | `1d`    |
+
+Combine units by using separate commands or choose the largest unit that fits — e.g. `90m` for an hour and a half.
+
+## Standard mute
+
+A standard mute applies the Muted role, which blocks the member from sending messages and adding reactions in every channel covered by `,setupmute`.
+
+**Mute a member:**
+
+```
+,mute <member> [duration] [reason]
+```
+
+Examples:
+
+```
+,mute @username
+,mute @username 30m Spamming in general
+,mute @username 1d Repeated rule violations
+```
+
+**Unmute a member:**
+
+```
+,unmute <member> [reason]
+```
+
+**List all currently muted members:**
+
+```
+,muted
+```
+
+<Note>
+You cannot mute yourself or any member with the **Administrator** permission.
+</Note>
+
+## Reaction mute
+
+A reaction mute prevents a specific member from adding emoji reactions, without affecting their ability to send messages. It applies at the channel level — in the channel where you run the command.
+
+**Apply a reaction mute** (alias: `,rmute`):
+
+```
+,reactionmute <member> [duration] [reason]
+,rmute <member> [duration] [reason]
+```
+
+**Remove a reaction mute:**
+
+```
+,reactionunmute <member> [reason]
+```
+
+**List all reaction-muted members:**
+
+```
+,reactionmuted
+```
+
+## Image mute
+
+An image mute prevents a member from sending image attachments and common image link formats (`.jpg`, `.png`, `.gif`, `.jpeg`, `.webp`). Luster silently deletes any matching message and notifies the member via DM. Like reaction mutes, this applies at the channel level.
+
+**Apply an image mute** (alias: `,imute`):
+
+```
+,imagemute <member> [duration] [reason]
+,imute <member> [duration] [reason]
+```
+
+**Remove an image mute:**
+
+```
+,imageunmute <member> [reason]
+```
+
+**List all image-muted members:**
+
+```
+,imagemuted
+```
+
+<Tip>
+Image mutes are useful for members who repeatedly post inappropriate images while still contributing text conversation. You can restrict just that behaviour without silencing them entirely.
+</Tip>

@@ -1,0 +1,182 @@
+---
+title: "Premium Features: Commands Unlocked at Each Tier"
+description: "Every command unlocked by Luster Premium, organized by tier. Covers AI chat, image analysis, OCR, role tools, server pet, reaction tracking, and more."
+sidebarTitle: "Features"
+---
+
+Every premium command is listed below, grouped by the tier that unlocks it. Because each tier is cumulative, a Tier 2 subscription includes all Tier 1 commands, and a Tier 3 subscription includes everything. Use `,check-premium` to confirm your active tier before running any of these commands.
+
+<Note>
+  Premium must be active on your account for these commands to work. If you run a premium command without an active subscription, Luster will not execute it. Run `,check-premium` to verify your status.
+</Note>
+
+## Tier 1 features
+
+Tier 1 is the entry-level premium tier. It unlocks server engagement tools, role utilities, and tracking features.
+
+<AccordionGroup>
+  <Accordion title="Role comparison — ,rolecompare">
+    Compare the roles and permissions of two server members side by side. The output shows roles each member has in common, roles unique to each member, and any differences in their guild permissions.
+
+    **Command:** `,rolecompare <member1> <member2>`
+
+    **Aliases:** `,rcomp`, `,compare`
+
+    **Example:**
+
+    ```
+    ,rolecompare @Alice @Bob
+    ```
+
+    The result lists common roles, roles held only by the first member, roles held only by the second member, and a permission diff table. Up to 15 roles are shown per section; if there are more, a count of remaining roles is displayed.
+  </Accordion>
+
+  <Accordion title="Server pet — ,pet">
+    Your server gets a shared virtual pet that the whole community keeps alive by staying active. The pet's health decreases over time and is restored by reaching a message threshold in the most active channel. If the pet dies, the community must collectively send five times the normal feed requirement to revive it.
+
+    | Command | Description |
+    |---|---|
+    | `,pet` | Show the pet's current status, health bar, hunger level, and top feeders. |
+    | `,pet feed` | Attempt to feed the pet. Requires enough recent messages in the most active channel. |
+    | `,pet howmany` | Check how many more messages are needed to feed the pet right now. |
+    | `,pet revive` | Revive the pet after it dies. Requires 5× the normal feed requirement. |
+    | `,pet set <number>` | Set the message threshold required to feed the pet (10–500). Requires **Manage Channels**. |
+    | `,pet name <name>` | Rename the server pet (max 32 characters). Requires **Manage Channels**. |
+
+    <Info>
+      The pet's health drops by roughly 4% per hour after its last feed. At 30% health it is starving; at 0% it is dead. Keep your community active to keep the pet healthy.
+    </Info>
+  </Accordion>
+
+  <Accordion title="Reaction tracking — ,reactionsgiven">
+    See how many reactions a member has given to others versus how many they have received. The command also shows a server-wide leaderboard of the top reaction givers. Self-reactions are not counted.
+
+    **Command:** `,reactionsgiven [member]`
+
+    **Aliases:** `,sleaderboard`, `,rgiven`
+
+    **Example:**
+
+    ```
+    ,reactionsgiven @Alice
+    ```
+
+    If you omit the member, the command shows your own stats. The output includes your given count, received count, a ratio, and a vibe label (collector, balanced, generous, or very generous), plus the top 10 givers in the server.
+  </Accordion>
+
+  <Accordion title="Reaction leaderboard — ,reactionboard">
+    Show which members received the most reactions from others over the past seven days. The leaderboard resets weekly and displays up to 20 members with a breakdown of the specific emojis they received. Use the arrow buttons to page through results.
+
+    **Command:** `,reactionboard`
+
+    **Aliases:** `,rtracker`, `,reactions`
+
+    Self-reactions are excluded from all counts.
+  </Accordion>
+
+  <Accordion title="Emoji usage tracker — ,emojistats">
+    See a ranked list of your server's custom emoji usage. For each emoji, the tracker shows total uses, the number of unique users who used it, and the channel where it was used most. Data resets weekly. Use the arrow buttons to page through the full list.
+
+    **Command:** `,emojistats`
+
+    **Aliases:** `,etracker`, `,emojitrack`
+
+    <Info>
+      Only custom server emojis are tracked. Standard Unicode emoji are not included.
+    </Info>
+  </Accordion>
+</AccordionGroup>
+
+## Tier 2 features
+
+Tier 2 includes everything in Tier 1 and adds server administration utilities.
+
+<AccordionGroup>
+  <Accordion title="Channel permission sync — ,sync">
+    Audit and repair channels whose permissions are out of sync with their parent category. When you run `,sync` on its own, Luster lists every categorized channel that does not currently inherit its category's permissions. Use the subcommands to fix them.
+
+    All sync commands require the **Manage Channels** permission.
+
+    | Command | Description |
+    |---|---|
+    | `,sync` | List all channels that are not synced to their category. |
+    | `,sync channel all` | Sync every unsynced channel across all categories at once. |
+    | `,sync channel <category id>` | Sync only the channels inside a specific category. |
+
+    **Example:**
+
+    ```
+    ,sync channel all
+    ```
+
+    <Warning>
+      Syncing channels overwrites their individual permission overrides with the category's permissions. This cannot be undone automatically — review the unsynced channels list with `,sync` before running a bulk sync.
+    </Warning>
+  </Accordion>
+</AccordionGroup>
+
+## Tier 3 features
+
+Tier 3 includes everything in Tier 1 and Tier 2 and adds the full AI-powered command suite.
+
+<AccordionGroup>
+  <Accordion title="AI text chat — ,ai">
+    Ask the AI any text question and receive a response powered by the `phi` language model. The bot sends a "thinking" message while processing and then replies with the full response.
+
+    **Command:** `,ai <prompt>`
+
+    **Aliases:** `,phi`, `,ask`
+
+    **Example:**
+
+    ```
+    ,ai What are the most common moderation mistakes in Discord servers?
+    ```
+
+    Response time depends on the length and complexity of your prompt. Responses are capped at 4,000 characters.
+  </Accordion>
+
+  <Accordion title="Image analysis — ,vision">
+    Attach an image and ask the AI a custom question about it. The `llava` vision model analyzes the image and responds to your prompt. If you don't provide a prompt, it defaults to a general description.
+
+    **Command:** `,vision [prompt]` (attach an image)
+
+    **Alias:** `,llava`
+
+    **Example:**
+
+    ```
+    ,vision What text is visible in this screenshot?
+    ```
+
+    <Info>
+      You must attach an image to the same message as the command. The bot will reject the command if no image is attached or if the attachment is not an image file.
+    </Info>
+  </Accordion>
+
+  <Accordion title="OCR text extraction — ,ocr">
+    Extract and read all visible text from an attached image. The vision model attempts to identify and transcribe text exactly as it appears in the image.
+
+    **Command:** `,ocr` (attach an image)
+
+    **Aliases:** `,describe`, `,read`
+
+    **Example:**
+
+    ```
+    ,ocr
+    ```
+
+    Attach a screenshot, photograph, or any image containing text. The bot will return a detailed analysis including all readable text it finds.
+  </Accordion>
+
+  <Accordion title="AI model info — ,aimodels">
+    Show information about the AI models currently available, including which model handles text queries and which handles vision and OCR.
+
+    **Command:** `,aimodels`
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+  Not sure which tier is right for you? Check the [Premium Overview](/premium/overview) page for a summary of each tier and how to subscribe.
+</Tip>

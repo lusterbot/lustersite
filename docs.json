@@ -1,0 +1,69 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "almond",
+  "name": "Luster",
+  "colors": {
+    "primary": "#7c5cbf",
+    "light": "#a07ee0",
+    "dark": "#5a3fa0"
+  },
+  "navbar": {
+    "primary": {
+      "type": "github",
+      "href": "https://github.com/lusterbot/luster-source"
+    }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart",
+              "configuration"
+            ]
+          },
+          {
+            "group": "Moderation",
+            "pages": [
+              "moderation/overview",
+              "moderation/antinuke",
+              "moderation/automod",
+              "moderation/muting"
+            ]
+          },
+          {
+            "group": "Server Tools",
+            "pages": [
+              "server/welcome",
+              "server/tickets",
+              "server/voicemaster",
+              "server/autorole",
+              "server/starboard",
+              "server/giveaways"
+            ]
+          },
+          {
+            "group": "Engagement",
+            "pages": [
+              "engagement/levels",
+              "engagement/economy",
+              "engagement/lastfm",
+              "engagement/games"
+            ]
+          },
+          {
+            "group": "Premium",
+            "pages": [
+              "premium/overview",
+              "premium/features"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

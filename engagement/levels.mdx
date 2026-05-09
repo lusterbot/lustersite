@@ -1,0 +1,196 @@
+---
+title: "Levels & XP: Rank Up and Earn Role Rewards"
+description: "Earn XP by chatting, level up to unlock role rewards, and compete on the leaderboard. Admins can fine-tune rates, ignored channels, and level-up messages."
+sidebarTitle: "Levels"
+---
+
+Luster tracks how active you are in your server and rewards you with XP every time you send a message. As your XP grows, your level rises — and if your server has role rewards configured, you'll automatically receive new roles as you hit level milestones. Everyone starts at level 0 and works their way up through genuine participation.
+
+## How XP works
+
+Every message you send gives you between 5 and 15 XP. There's a brief cooldown between XP gains so that spamming messages doesn't help. Your level is calculated from your total XP using the formula `level = floor(sqrt(xp) / 10)`, which means early levels are quick to reach and later ones take progressively more effort.
+
+<Note>
+XP gain is per-server. Your level in one server has no effect on your level in another.
+</Note>
+
+---
+
+## Viewing your rank
+
+Use `,levels` to see your current level, XP, rank position, and a progress bar showing how far you are to the next level. You can also check another member's stats by passing their name.
+
+```
+,levels
+,levels @username
+```
+
+To see the top 10 members in your server, use the leaderboard command:
+
+```
+,levels leaderboard
+,levels lb
+,levels top
+```
+
+---
+
+## Role rewards
+
+Servers can assign a Discord role to specific levels. When you reach that level, Luster automatically gives you the role. Depending on server settings, roles either stack (you keep all previous level roles) or replace each other (you hold only the highest one you've earned).
+
+### Admin: managing role rewards
+
+<Info>
+The commands below require the **Manage Messages** permission.
+</Info>
+
+<Steps>
+  <Step title="Add a role reward">
+    Assign a role to a specific level. Members who reach that level will receive the role automatically.
+
+    ```
+    ,levels addrole <level> <@role>
+    ```
+
+    Example: `,levels addrole 10 @Active`
+  </Step>
+  <Step title="Remove a role reward">
+    Remove the reward assigned to a given level. Members who already hold the role keep it until a sync is run.
+
+    ```
+    ,levels removerole <level>
+    ```
+  </Step>
+  <Step title="View all role rewards">
+    List every configured level → role mapping for this server.
+
+    ```
+    ,levels roles
+    ```
+  </Step>
+  <Step title="Sync roles to current levels">
+    Force Luster to re-check every member's level and assign or remove roles accordingly. Useful after adding new rewards or importing data.
+
+    ```
+    ,levels sync
+    ```
+  </Step>
+</Steps>
+
+---
+
+## Admin configuration
+
+<Info>
+All configuration commands require the **Administrator** permission unless noted otherwise.
+</Info>
+
+<AccordionGroup>
+  <Accordion title="Enable or disable the leveling system">
+    Turn XP tracking on or off for your entire server without deleting any data.
+
+    ```
+    ,levels enable
+    ,levels disable
+    ```
+  </Accordion>
+
+  <Accordion title="Set the XP gain rate">
+    Control how frequently members earn XP. The rate is measured in messages per minute (1–5). A rate of 3 means a member can earn XP from up to 3 messages per minute.
+
+    ```
+    ,levels setrate <1-5>
+    ```
+  </Accordion>
+
+  <Accordion title="Configure a level-up message">
+    Set a custom message that Luster sends when someone levels up. Use `{user}` and `{level}` as placeholders. Optionally specify a channel — if omitted, Luster sends the message in the same channel where the leveling-up message was sent.
+
+    ```
+    ,levels message [#channel] <message text>
+    ```
+
+    Example: `,levels message #general Congrats {user}, you just hit level {level}!`
+
+    Preview the message before going live:
+    ```
+    ,levels message test
+    ```
+
+    Remove the level-up message entirely:
+    ```
+    ,levels message reset
+    ```
+  </Accordion>
+
+  <Accordion title="Toggle role stacking">
+    By default, members hold only their highest earned level role. Enabling stacking means every role reward they've ever earned stays on their profile.
+
+    ```
+    ,levels stackroles
+    ```
+
+    Run the command again to toggle back.
+  </Accordion>
+
+  <Accordion title="Ignore roles and channels">
+    Prevent XP from being earned in specific channels or by members with specific roles.
+
+    ```
+    ,levels ignore <#channel>
+    ,levels ignore <@role>
+    ```
+
+    To remove an ignore:
+    ```
+    ,levels ignore remove <#channel>
+    ,levels ignore remove <@role>
+    ```
+  </Accordion>
+
+  <Accordion title="Manually set a user's level">
+    Override a specific member's level. Their XP is recalculated to match the new level.
+
+    ```
+    ,levels setlevel <@user> <level>
+    ```
+  </Accordion>
+
+  <Accordion title="Reset a user or the entire server">
+    Reset a single member's level and XP back to zero:
+    ```
+    ,levels reset <@user>
+    ```
+
+    Reset all level data for every member in the server (requires confirmation):
+    ```
+    ,levels resetguild
+    ```
+
+    Reset all leveling configuration (messages, role rewards, ignored channels/roles) without touching member data:
+    ```
+    ,levels resetconfig
+    ```
+  </Accordion>
+
+  <Accordion title="Set the accent color">
+    Change the color used in level cards and containers. Provide a valid hex code.
+
+    ```
+    ,levels color #FF5500
+    ```
+  </Accordion>
+
+  <Accordion title="View current configuration">
+    See a summary of all leveling settings: status, rate, stack mode, color, ignored roles/channels, and level-up message setup.
+
+    ```
+    ,levels config
+    ```
+  </Accordion>
+</AccordionGroup>
+
+<Warning>
+`,levels resetguild` permanently deletes all member level data for your server. Luster will ask you to type `yes` to confirm before proceeding.
+</Warning>

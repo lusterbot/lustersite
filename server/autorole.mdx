@@ -1,0 +1,77 @@
+---
+title: "Autorole: Assign Roles Automatically on Join"
+description: "Automatically assign a role to every new member or bot that joins your server. Supports separate roles for human members and bots, with retroactive sync."
+---
+
+Autorole saves you from manually assigning a base role to every new arrival. You configure one role for human members and, optionally, a separate role for bots. As soon as someone joins, Luster assigns the right role instantly — no reaction, no command, nothing extra for the new member to do.
+
+## Setting the member autorole
+
+<Steps>
+  <Step title="Pick the role to assign">
+    Use `,autorole set` followed by the role you want new human members to receive. You can mention the role, use its name, or use its ID.
+
+    ```
+    ,autorole set @Member
+    ```
+  </Step>
+  <Step title="Verify the configuration">
+    Run `,autorole` on its own to see the current member and bot autorole settings.
+
+    ```
+    ,autorole
+    ```
+  </Step>
+</Steps>
+
+<Note>
+  You need the **Manage Roles** permission to configure autorole. Luster's own role must also be positioned **above** the autorole in the server's role hierarchy — otherwise it cannot assign it.
+</Note>
+
+## Setting the bot autorole
+
+You can configure a separate role that Luster assigns whenever a bot is added to your server.
+
+```
+,autorole bot set @Bots
+```
+
+## Checking for members who are missing the role
+
+If you add an autorole after some members have already joined, use the check command to assign the role to everyone who is missing it retroactively.
+
+```
+,autorole check
+```
+
+For bots, run:
+
+```
+,autorole bcheck
+```
+
+<Tip>
+  The aliases `,autorole members` and `,autorole missing` also work for `,autorole check`. For bots, `,autorole botcheck` and `,autorole bots` are equivalent.
+</Tip>
+
+## Removing the autorole
+
+```
+,autorole remove members
+,autorole remove bots
+,autorole remove all
+```
+
+Passing `all` clears both the member and bot autorole at once. This does **not** remove the role from members who already have it — it only stops Luster from assigning it going forward.
+
+## Command reference
+
+| Command | Alias | Description |
+|---|---|---|
+| `,autorole` | `,ar` | Show the current autorole configuration. |
+| `,autorole set <role>` | `,ar add <role>` | Set the role assigned to new human members. |
+| `,autorole bot set <role>` | — | Set the role assigned to new bots. |
+| `,autorole config` | `,ar settings`, `,ar show` | Show the current configuration (same as running `,autorole` alone). |
+| `,autorole check` | `,ar members`, `,ar missing` | Assign the member autorole to everyone who is missing it. |
+| `,autorole bcheck` | `,ar botcheck`, `,ar bots` | Assign the bot autorole to every bot that is missing it. |
+| `,autorole remove <members\|bots\|all>` | `,ar delete`, `,ar clear` | Clear the member autorole, bot autorole, or both. |
