@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "build": "mint build",
+    "dev": "mint dev"
+  },
+  "devDependencies": {
+    "@mintlify/cli": "latest"
+  }
+}
