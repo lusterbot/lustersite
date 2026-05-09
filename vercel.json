@@ -1,4 +1,4 @@
 {
-  "buildCommand": "npm install -g @mintlify/cli && mint export",
+  "buildCommand": "npm install -g @mintlify/cli && mint export && unzip export.zip -d site",
   "outputDirectory": "site"
 }
